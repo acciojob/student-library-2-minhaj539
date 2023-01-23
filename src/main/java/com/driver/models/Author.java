@@ -71,5 +71,8 @@ public class Author {
     public void setBooksWritten(List<Book> booksWritten) {
         this.booksWritten = booksWritten;
     }
+
+    public Author() {
+    }
 }
 
