@@ -7,6 +7,8 @@ import com.driver.repositories.CardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 public class CardService {
 
@@ -15,12 +17,14 @@ public class CardService {
     CardRepository cardRepository3;
 
     public Card createAndReturn(Student student){
-        Card card = null;
+        Card card = new Card();
+        card.setCardStatus(CardStatus.ACTIVATED);
         //link student with a new card
         return card;
     }
 
     public void deactivateCard(int student_id){
+
         cardRepository3.deactivateCard(student_id, CardStatus.DEACTIVATED.toString());
     }
 }
