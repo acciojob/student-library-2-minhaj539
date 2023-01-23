@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -11,6 +12,7 @@ import javax.persistence.*;
 import java.util.Date;
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Entity
 public class Student {
@@ -26,8 +28,8 @@ public class Student {
 
     private String country;
 
-    public Student() {
-    }
+//   public Student() {
+  //  }
 
     // alter table student add foreign key constraint card references Card(id)
 
