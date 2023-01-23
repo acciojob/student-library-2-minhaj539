@@ -13,12 +13,11 @@ import lombok.Setter;
 @NoArgsConstructor
 public class AuthorConvertor {
    public static Author DtoToEntity(AuthorRequestDto authorRequestDto){
-       Author author=Author.builder().
-           name(authorRequestDto.getName()).
-           email(authorRequestDto.getEmail()).
-           age(authorRequestDto.getAge()).
-           country(authorRequestDto.getCountry()).
-           build();
+       Author author=new Author();
+       author.setName(authorRequestDto.getName());
+       author.setAge(authorRequestDto.getAge());
+       author.setEmail(authorRequestDto.getEmail());
+       author.setCountry(authorRequestDto.getCountry());
        return author;
    }
 }
