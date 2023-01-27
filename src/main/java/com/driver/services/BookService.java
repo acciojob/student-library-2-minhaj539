@@ -35,25 +35,22 @@ public class BookService {
     }
 
     public List<Book> getBooks(String genre, boolean available, String author){
+       if(author!=null&&genre!=null){
+               return bookRepository2.findBooksByGenreAuthor(genre,author,available);
+       }
+       else if(author==null){
+           return bookRepository2.findBooksByGenre(genre,available);
+       }
+       else if(genre==null){
+           return bookRepository2.findBooksByAuthor(author,available);
+       }
+       else{
+           return bookRepository2.findByAvailability(available);
+       }
 
-        Author getAuthor=authorRepository.findByName(author);
-        List<Book> booksByAuthor=getAuthor.getBooksWritten();
-        List<Book> availableBooks=new ArrayList<>();
-        List<Book> unAvailableBooks=new ArrayList<>();
 
-            for(Book book:booksByAuthor){
-                String bookType= String.valueOf(book.getGenre());
-                if(genre.equals(bookType)) {
-                    if(book.isAvailable()) {
-                        availableBooks.add(book);
-                    }
-                    else{
-                        unAvailableBooks.add(book);
-                    }
-                }
-            }
-            if(available==true) return availableBooks;
-            return unAvailableBooks;             //find the elements of the list by yourself
+
+                   //find the elements of the list by yourself
 
     }
 }
