@@ -35,6 +35,9 @@ public class Card {
         this.cardStatus = CardStatus.ACTIVATED;
     }
 
+
+
+
     public int getId() {
         return id;
     }
@@ -81,5 +84,12 @@ public class Card {
 
     public void setBooks(List<Book> books) {
         this.books = books;
+    }
+
+    public Card(Student student, Date createdOn, Date updatedOn, CardStatus cardStatus) {
+        this.student = student;
+        this.createdOn = createdOn;
+        this.updatedOn = updatedOn;
+        this.cardStatus = cardStatus;
     }
 }

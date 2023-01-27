@@ -62,6 +62,13 @@ public class Student {
         return emailId;
     }
 
+    public Student(String emailId, String name, int age, String country) {
+        this.emailId = emailId;
+        this.name = name;
+        this.age = age;
+        this.country = country;
+    }
+
     public void setEmailId(String emailId) {
         this.emailId = emailId;
     }

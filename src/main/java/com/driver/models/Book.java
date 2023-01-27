@@ -93,5 +93,16 @@ public class Book {
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
     }
+
+    public Book() {
+
+    }
+
+    public Book(String name, Genre genre, Author author) {
+        this.name = name;
+        this.genre = genre;
+        this.author = author;
+        this.available = true;
+    }
 }
 

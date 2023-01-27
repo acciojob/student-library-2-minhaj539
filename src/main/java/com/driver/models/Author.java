@@ -73,10 +73,6 @@ public class Author {
     }
 
     public Author() {
-        this.name = name;
-        this.email = email;
-        this.age = age;
-        this.country = country;
     }
 
     public Author(String name, String email, int age, String country) {
