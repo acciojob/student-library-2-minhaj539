@@ -268,8 +268,15 @@ public class TransactionService {
         if(no_of_days_passed > getMax_allowed_days){
             fine = (int)((no_of_days_passed - getMax_allowed_days) * fine_per_day);
         }
-
         Book book = transaction.getBook();
+
+        Card card=cardRepository.findById(cardId).get();
+        List<Book> issuedBooks=card.getBooks();
+        issuedBooks.remove(book);
+        card.setBooks(issuedBooks);
+        cardRepository.save(card);
+
+
 
         book.setAvailable(true);
         book.setCard(null);
