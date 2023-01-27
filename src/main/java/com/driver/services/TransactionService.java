@@ -235,7 +235,7 @@ public class TransactionService {
         book.setAvailable(false);
         List<Book> bookList = card.getBooks();
         bookList.add(book);
-        card.setBooks(bookList);
+
 
         cardRepository.save(card);
 
