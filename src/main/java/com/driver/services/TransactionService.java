@@ -55,7 +55,7 @@ public class TransactionService {
         //2. card is present and activated
         // If it fails: throw new Exception("Card is invalid");
 
-        if(card==null||card.getCardStatus().equals("DEACTIVATED")){
+        if(card==null||card.getCardStatus().equals(CardStatus.DEACTIVATED)){
             transaction.setTransactionStatus(TransactionStatus.FAILED);
             transactionRepository5.save(transaction);
             throw new Exception("Card is invalid");
