@@ -254,9 +254,13 @@ public class TransactionService {
 
     public Transaction returnBook(int cardId, int bookId) throws Exception{
 
+
+
         List<Transaction> transactions = transactionRepository.find(cardId, bookId,TransactionStatus.SUCCESSFUL, true);
+        if(transactions==null) throw new Exception("No transactions available");
 
         Transaction transaction = transactions.get(transactions.size() - 1);
+
 
         Date issueDate = transaction.getTransactionDate();
 
