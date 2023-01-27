@@ -21,12 +21,9 @@ public class TransactionController {
     @PostMapping("/issueBook")
     public ResponseEntity issueBook(@RequestParam("cardId") int cardId, @RequestParam("bookId") int bookId) throws Exception{
 
-        try {
+
             String res=transactionService.issueBook(cardId, bookId);
-        }
-        catch(Exception e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.ACCEPTED);
-        }
+
        return new ResponseEntity<>("transaction completed", HttpStatus.ACCEPTED);
     }
 
@@ -35,12 +32,8 @@ public class TransactionController {
     public ResponseEntity returnBook(@RequestParam("cardId") int cardId, @RequestParam("bookId") int bookId) throws Exception{
 
 
-        try {
+
             Transaction transaction=transactionService.returnBook(cardId, bookId);
-        }
-        catch(Exception e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.ACCEPTED);
-        }
         return new ResponseEntity<>("transaction completed", HttpStatus.ACCEPTED);
     }
 }
