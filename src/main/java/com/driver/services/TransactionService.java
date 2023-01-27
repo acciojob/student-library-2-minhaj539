@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class TransactionService {
@@ -40,6 +41,7 @@ public class TransactionService {
         Transaction transaction=new Transaction();
         transaction.setCard(card);
         transaction.setBook(book);
+        transaction.setIssueOperation(true);
 
 
 
@@ -100,25 +102,73 @@ public class TransactionService {
     }
 
     public Transaction returnBook(int cardId, int bookId) throws Exception{
+        /*  List<Transaction> transactionList=transactionRepository5.find(cardId,bookId,TransactionStatus.SUCCESSFUL,true);
+        Transaction transaction=transactionList.get(transactionList.size()-1);
+        Date issueDate=transaction.getTransactionDate();
+        long issueTime=System.currentTimeMillis()-issueDate.getTime();
+        long no_of_days_passed= TimeUnit.DAYS.convert(issueTime, TimeUnit.MILLISECONDS);
+        int fine=0;
+        if(no_of_days_passed>getMax_allowed_days){
+            fine= (int) ((no_of_days_passed-getMax_allowed_days)*fine_per_day);
+        }
 
-        List<Transaction> transactions = transactionRepository5.find(cardId, bookId, TransactionStatus.SUCCESSFUL, true);
-        Transaction transaction = transactions.get(transactions.size() - 1);
         Book book=bookRepository5.findById(bookId).get();
-        Card card=cardRepository5.findById(cardId).get();
-
-
-        transaction.setBook(book);
-        transaction.setTransactionStatus(TransactionStatus.SUCCESSFUL);
-        transaction.setFineAmount(100);
-        transactions.add(transaction);
+        book.setCard(null);
         book.setAvailable(true);
-        book.setTransactions(transactions);
-        bookRepository5.save(book);
+        bookRepository5.updateBook(book);
+        Transaction transaction1=new Transaction();
+        transaction1.setBook(transaction.getBook());
+        transaction1.setCard(transaction.getCard());
+        transaction1.setFineAmount(fine);
+        transaction1.setIssueOperation(false);
+        transaction1.setTransactionStatus(TransactionStatus.SUCCESSFUL);
+        transactionRepository5.save(transaction1);
+        return transaction;
+
         //for the given transaction calculate the fine amount considering the book has been returned exactly when this function is called
         //make the book available for other users
         //make a new transaction for return book which contains the fine amount as well
 
-        Transaction returnBookTransaction  = null;
-        return returnBookTransaction; //return the transaction after updating all details
+
+       //return the transaction after updating all details*/
+        List<Transaction> transactions = transactionRepository5.find(cardId, bookId,TransactionStatus.SUCCESSFUL, true);
+
+        Transaction transaction = transactions.get(transactions.size() - 1);
+
+        Date issueDate = transaction.getTransactionDate();
+
+        long timeIssuetime = Math.abs(System.currentTimeMillis() - issueDate.getTime());
+
+        long no_of_days_passed = TimeUnit.DAYS.convert(timeIssuetime, TimeUnit.MILLISECONDS);
+
+        int fine = 0;
+        if(no_of_days_passed > getMax_allowed_days){
+            fine = (int)((no_of_days_passed - getMax_allowed_days) * fine_per_day);
+        }
+
+        Book book = transaction.getBook();
+        Card card=cardRepository5.findById(cardId).get();
+        List<Book> issuedBooks=card.getBooks();
+        issuedBooks.remove(book);
+        cardRepository5.save(card);
+
+
+        book.setAvailable(true);
+        book.setCard(null);
+
+        bookRepository5.updateBook(book);
+
+        Transaction tr = new Transaction();
+        tr.setBook(transaction.getBook());
+        tr.setCard(transaction.getCard());
+        tr.setIssueOperation(false);
+        tr.setFineAmount(fine);
+        tr.setTransactionStatus(TransactionStatus.SUCCESSFUL);
+
+        transactionRepository5.save(tr);
+
+        return tr;
+
+
     }
 }
