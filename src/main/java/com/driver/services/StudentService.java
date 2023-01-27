@@ -35,24 +35,11 @@ public class StudentService {
     }
 
     public void createStudent(Student student){
-       Card card=cardService4.createAndReturn(student);  //me
-       card.setStudent(student);
-       student.setCard(card);
-       cardRepository.save(card);
-
+      Card newCard=cardService4.createAndReturn(student);
     }
 
     public void updateStudent(Student student){
-        int id=student.getId();
-        Card card=cardRepository.findById(id).get();
-        Student updateStudent=studentRepository4.findById(id).get();
-        updateStudent.setName(student.getName());
-        updateStudent.setAge(student.getAge());
-        updateStudent.setEmailId(student.getEmailId());
-        updateStudent.setCountry(student.getCountry());
-         card.setStudent(updateStudent);
-         updateStudent.setCard(card);
-         cardRepository.save(card);
+       studentRepository4.updateStudentDetails(student);
     }
 
     public void deleteStudent(int id){

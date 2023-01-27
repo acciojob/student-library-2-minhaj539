@@ -23,32 +23,22 @@ public class BookService {
 
     public void createBook(Book book){
 
-        book.setAvailable(true);
-        int author_id=book.getAuthor().getId();
-        Author author=authorRepository.findById(author_id).get();
-        List<Book> booksList=author.getBooksWritten();
-        booksList.add(book);
-        author.setBooksWritten(booksList);
-        book.setAuthor(author);
-        authorRepository.save(author);
-
+      bookRepository2.save(book);
     }
 
     public List<Book> getBooks(String genre, boolean available, String author){
        if(author!=null&&genre!=null){
                return bookRepository2.findBooksByGenreAuthor(genre,author,available);
        }
-       else if(author==null){
+       else if(genre!=null){
            return bookRepository2.findBooksByGenre(genre,available);
        }
-       else if(genre==null){
+       else if(author!=null){
            return bookRepository2.findBooksByAuthor(author,available);
        }
        else{
            return bookRepository2.findByAvailability(available);
        }
-
-
 
                    //find the elements of the list by yourself
 
