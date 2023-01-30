@@ -91,7 +91,6 @@ public class TransactionService {
         bookRepository5.updateBook(book);
 
         transaction.setTransactionStatus(TransactionStatus.SUCCESSFUL);
-
         transactionRepository5.save(transaction);
 
 
@@ -122,6 +121,7 @@ public class TransactionService {
         Book book=transaction.getBook();
         book.setCard(null);
         book.setAvailable(true);
+        bookRepository5.updateBook(book);
 
         Card card1=cardRepository5.findById(cardId).get();
         List<Book> bookList=card1.getBooks();
@@ -129,8 +129,8 @@ public class TransactionService {
         bookList.remove(book);
 
         cardRepository5.save(card1);
+       //line 124 was here
 
-        bookRepository5.updateBook(book);
 
 
         //   bookRepository5.updateBook(book);
